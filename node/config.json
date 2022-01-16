@@ -1,7 +1,7 @@
 {
 	"name":"node1",
-	"device":"CUDA",
-	"blender_exe":"blender",
+	"device":"OPENCL",
+	"blender_exe":"./blender/blender",
 	"host":"0.0.0.0",
 	"port":5002
 }

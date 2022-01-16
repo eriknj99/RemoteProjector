@@ -26,11 +26,12 @@ class Node:
     # Get the server information
     def get_info(self) -> str:
         out = ""
-        out += (f"Name:        {self.name}\n")
-        out += (f"Device:      {self.device}\n")
-        out += (f"Blender EXE: {self.blender_exe}\n")
-        out += (f"host:        {self.host}\n")
-        out += (f"port:        {self.port}\n")
+        out += (f"name:{self.name}\n")
+        out += (f"device:{self.device}\n")
+        out += (f"blender_exe:{self.blender_exe}\n")
+        out += (f"blender_ver:{self.projector.blender_version}\n")
+        out += (f"host:{self.host}\n")
+        out += (f"port:{self.port}\n")
         return out
 
     # Recieve a file and save it to the workspace dir
@@ -70,7 +71,7 @@ class Node:
     # Render the current job in a seperate thread
     def render(self, conn):
         conn.sendall("Rendering".encode())
-        self.projector.project("./workspace/" + self.current_job.blend_file)
+        self.projector.project("./workspace/" + os.path.basename(self.current_job.blend_file))
         log.info("Started Render")
 
     # Get the render status as a string
@@ -110,14 +111,17 @@ class Node:
                         if not data:
                             break
                         command = data.decode().split(self.SEPARATOR)
+                        #if(command[0] != "get_status"):
+                        #    log.debug(f"Recieved {command[0]} from {addr}")
+
                         if(command[0] == "send_file"):
                             conn.sendall(b'ready')
                             self.recieve_file(command, conn)
                         elif(command[0] == "get_info"):
                             conn.sendall(self.get_info().encode())
                         elif(command[0] == "new_job"):
-                            conn.sendall("Creating new Job...".encode())
                             self.new_job(command)
+                            conn.sendall("success".encode())
                         elif(command[0] == "render"):
                             self.render(conn)
                         elif(command[0] == "get_status"):

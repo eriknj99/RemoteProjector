@@ -118,7 +118,6 @@ def render(blendFile, blender_exe, device, status, frame):
 class Projector:
 
     def project(self, blendFile):
-      
         outputFile = f"0000.png"
 
         # Start the render thread with a new status
