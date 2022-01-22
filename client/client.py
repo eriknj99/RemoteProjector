@@ -243,10 +243,7 @@ class NodeHandler:
         self.render_start_time = -1
 
         self.state = -1
-        if(self.check_connection()):
-            log.debug(f"Connected to {self.node.name}@{self.HOST}:{self.PORT}")
-        else:
-            log.error(f"Could not connect to node {self.HOST}:{self.PORT}")
+        if(not self.check_connection()):
             return
 
         # Start a new job to clear the workspace directory on the node
@@ -259,6 +256,10 @@ class NodeHandler:
 
 def print_status(completed_frames, total_frames, nodes):
     log.clear()
+
+    for l in log.log_cache:
+        print(l, end="")
+    
     progress_bar = bar.drawGraph("Frames", "", completed_frames, 0, total_frames, color="blue", precision=0, numTicks = 3, length=-1)
     print(progress_bar)
     print('━' * 20)
@@ -341,6 +342,7 @@ def project(job_id, blend_file, input_folders, output_folders, input_image="inpu
     nodes = []
     for nc in node_configs.keys():
         nodes.append(NodeHandler(nc, node_configs[nc], job_id, blend_file, input_image, output_image))
+
    
     # Init vars to keep track of render progress
     total_frames = len(render_queue)
