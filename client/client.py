@@ -269,7 +269,8 @@ def print_status(completed_frames, total_frames, nodes):
 # Read a client config file as a json dict
 def read_config():
     out = {}
-    f = open("config.json")
+    config_file_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "config.json")
+    f = open(config_file_path)
     data = json.load(f)["nodes"]
     for i in range(len(data)):
         out[data[i][0]] = data[i][1]
