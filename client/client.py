@@ -377,10 +377,3 @@ def project(job_id, blend_file, input_folders, output_folders, input_image="inpu
         sleep(1)
     
 
-blend_file   = "/home/erik/Projects/Neon2/Neon/Cache/remote_test/test.blend"
-input_files  = ["/home/erik/Projects/Neon2/Neon/Cache/remote_test/generated/main_mask", "/home/erik/Projects/Neon2/Neon/Cache/remote_test/generated/hlines", "/home/erik/Projects/Neon2/Neon/Cache/remote_test/generated/vlines"]
-output_files = ["/home/erik/Projects/Neon2/Neon/Cache/remote_test/rendered/main_mask", "/home/erik/Projects/Neon2/Neon/Cache/remote_test/rendered/hlines", "/home/erik/Projects/Neon2/Neon/Cache/remote_test/rendered/vlines"]
-
-project("remote_test", blend_file, input_files, output_files)
-
-
